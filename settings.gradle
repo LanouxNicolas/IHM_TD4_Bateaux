@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Axes Techniques'
+rootProject.name='Projet IHM - Bateaux'
