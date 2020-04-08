@@ -1,14 +1,13 @@
-package com.ihm.axestechniques.activities;
+package com.ihm.projet.activities;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import com.ihm.axestechniques.R;
+
+import com.ihm.projet.R;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;

@@ -1,4 +1,4 @@
-package com.ihm.axestechniques.activities;
+package com.ihm.projet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -13,7 +13,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ihm.axestechniques.R;
+import com.ihm.projet.R;
+
 
 public class MainActivity extends AppCompatActivity implements IActivityMap, LocationListener {
 

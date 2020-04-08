@@ -1,4 +1,4 @@
-package com.ihm.axestechniques.activities;
+package com.ihm.projet.activities;
 
 public interface IActivityMap {
     String LATITUDE_PARAMETER = "latitude";

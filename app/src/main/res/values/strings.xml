@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Axes Techniques</string>
+    <string name="app_name">Projet IHM</string>
+    <string name="open_map">Ouvrir la carte</string>
+    <string name="map_text_view">OpenStreetMap</string>
 </resources>
