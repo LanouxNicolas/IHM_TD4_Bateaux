@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这里我选择不用它自带的Action Bar, 而是可以自定义的Toolbar来代替. 在gradle(Module:app)里面增加了点东
+    西，然后我用 菜单栏 -> Refactor -> Migrate to AndroidX 来兼容这个androidx.appcompat.widget.Toolbar
+    类型, 这个Toolbar是用作你们这个项目的标题的. 背景颜色在values->colors.xml里面改 -->
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="90sp"
+    android:background="@color/colorPrimary">
+
+    <!--  在这修改字体属性(通用) -->
+    <TextView
+        android:id="@+id/AppName"
+        android:layout_width="wrap_content"
+        android:layout_height="60sp"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:text="@string/sea_watch"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+</androidx.appcompat.widget.Toolbar>

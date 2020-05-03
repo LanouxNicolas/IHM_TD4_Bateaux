@@ -1,0 +1,6 @@
+<resources>
+    <!-- *!* Everyone in the group must have a different API key to run, otherwise coordinates will not be displayed (one API key per project) *!* -->
+    <!-- The URL to apply for the api key https://console.developers.google.com/ After applying for it, replace my key below -->
+    <!-- API Key for Google Map -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCiVjSLPFdHz1qlqgSOjv9nAEWfNYOuPEI</string>
+</resources>

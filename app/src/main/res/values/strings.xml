@@ -1,5 +1,71 @@
 <resources>
-    <string name="app_name">Projet IHM</string>
-    <string name="open_map">Ouvrir la carte</string>
-    <string name="map_text_view">OpenStreetMap</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!--  Includes all labels strings -->
+    <string name="app_name">Sea Watch</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Page d\'accueil</string>
+    <string name="second_fragment_label">Map</string>
+    <string name="previous">Retour</string>
+
+    <!-- HomePage Strings -->
+    <string name="location">Géolocalisation</string>
+    <string name="mapToggle">Carte</string>
+    <string name="post">Partager une information</string>
+    <string name="sea_watch">Sea Watch</string>
+
+    <!--  Map Page Strings  -->
+    <string name="MapCheckBox">Afficher les alertes météos</string>
+    <string-array name="selections">
+        <item>Vent</item>
+        <item>Courant</item>
+        <item>Précipitations</item>
+        <item>Temp. eau (C°)</item>
+        <item>Temp. air (C°)</item>
+    </string-array>
+    <string name="mark">X</string>
+
+    <!--  MapDetail Page Strings  -->
+    <string name="mapDetailReturn">Retour à la carte</string>
+    <string name="mapDetailTitle">Alerte mééeo</string>
+    <string name="mapDetailDetails">Détails :</string>
+    <string name="mapDetailDernierReleve">Dernier relevé :</string>
+    <string name="mapDetailVent">Vent :</string>
+    <string name="mapDetailTemperature">Température de l\'eau :</string>
+    <string name="mapDetailPrecipitations">Précipitations :</string>
+    <string name="mapDetailHint">Aucun détail disponible</string>
+    <string name="mapDetailDefault">Aucune donnée</string>
+
+    <!--  Post Page Strings  -->
+    <string name="post_btn">Envoyer</string>
+    <string name="Lieu">Lieu :</string>
+    <string name="N">N</string>
+    <string name="E">E</string>
+    <string name="Position">Position actuelle</string>
+    <string name="Details">Détails :</string>
+    <string name="Releve">Relevé :</string>
+    <string name="Tous">(Tous les champs ne sont pas obligatoires)</string>
+    <string name="Vent">Vent :</string>
+    <string name="KM">km/h</string>
+    <string-array name="windDirection">
+        <item>Nord</item>
+        <item>Sud</item>
+        <item>Est</item>
+        <item>Ouest</item>
+    </string-array>
+    <string name="Signaler">Signaler un incident</string>
+    <string name="Courant">Courant :</string>
+    <string name="Temp">Température :</string>
+    <string name="Precipitation">Précipitations :</string>
+    <string name="MM">mm/min</string>
+    <string name="Celsius">C°</string>
+    <string name="postDetailHint">Vous pouvez rajouter des détails ici</string>
+        <string name="CameraHint">(Ajouter une image)</string>
+    <string name="image">Image</string>
 </resources>

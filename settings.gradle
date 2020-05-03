@@ -1,2 +1,2 @@
+rootProject.name='SeaWatch'
 include ':app'
-rootProject.name='Projet IHM - Bateaux'
