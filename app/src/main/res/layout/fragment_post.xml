@@ -92,8 +92,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
+        app:layout_constraintVertical_bias="0.281" />
 
     <CheckBox
         android:id="@+id/positionActuelle"
@@ -106,24 +108,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/post_details"
-        android:text="@string/Details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="220dp"
-        android:fontFamily="casual"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <EditText
         android:id="@+id/detail_input"
         android:layout_width="275sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="196dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/border"
         android:ems="10"
@@ -132,8 +121,8 @@
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:lines="6"
-        android:minLines="6"
         android:maxLines="6"
+        android:minLines="6"
         android:paddingStart="5sp"
         android:paddingTop="3sp"
         android:paddingEnd="5sp"
@@ -142,14 +131,15 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/post_releve"
-        android:text="@string/Releve"
+        android:id="@+id/post_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="196dp"
         android:fontFamily="casual"
+        android:text="@string/Details"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -157,130 +147,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/post_hint1"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="400dp"
-        android:fontFamily="casual"
-        android:text="@string/Tous"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="12sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/post_vent"
+        android:id="@+id/post_releve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="430dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="332dp"
         android:fontFamily="casual"
-        android:text="@string/mapDetailVent"
+        android:text="@string/Releve"
         android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/input_vent"
+        android:id="@+id/input_precipitations"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="430dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="540dp"
         android:background="@drawable/border"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
-        android:labelFor="@+id/input_vent"
+        android:labelFor="@+id/input_precipitations"
         android:paddingStart="2sp"
         android:paddingEnd="2sp"
-        app:layout_constraintStart_toEndOf="@+id/post_vent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_km"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="430dp"
-        android:fontFamily="casual"
-        android:text="@string/KM"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/post_spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="34sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="424dp"
-        android:dropDownWidth="match_parent"
-        android:entries="@array/windDirection"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toEndOf="@+id/post_km"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/Signaler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:text="@string/Signaler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/post_corant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="500dp"
-        android:fontFamily="casual"
-        android:text="@string/Courant"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/post_spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="34sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="494dp"
-        android:dropDownWidth="match_parent"
-        android:entries="@array/windDirection"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toEndOf="@+id/post_corant"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_temperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="540dp"
-        android:fontFamily="casual"
-        android:text="@string/Temp"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/post_precipitations"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/input_temperature"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="540dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="500dp"
         android:background="@drawable/border"
         android:ems="10"
         android:importantForAutofill="no"
@@ -292,55 +193,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/post_Celsius"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="540dp"
-        android:fontFamily="casual"
-        android:text="@string/Celsius"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_precipitations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="580dp"
-        android:fontFamily="casual"
-        android:text="@string/Precipitation"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/input_precipitations"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="580dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
-        android:labelFor="@+id/input_precipitations"
-        android:paddingStart="2sp"
-        android:paddingEnd="2sp"
-        app:layout_constraintStart_toEndOf="@+id/post_precipitations"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/post_mm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="580dp"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="540dp"
         android:fontFamily="casual"
         android:text="@string/MM"
         android:textColor="@color/design_default_color_on_secondary"
@@ -349,12 +206,161 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/post_spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="34sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="456dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/windDirection"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/post_corant"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="casual"
+        android:text="@string/Temp"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/post_spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="34sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="384dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/windDirection"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toEndOf="@+id/post_km"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="392dp"
+        android:fontFamily="casual"
+        android:text="@string/KM"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_vent"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="392dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:labelFor="@+id/input_vent"
+        android:paddingStart="2sp"
+        android:paddingEnd="2sp"
+        app:layout_constraintStart_toEndOf="@+id/post_vent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_corant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="460dp"
+        android:fontFamily="casual"
+        android:text="@string/Courant"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_vent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="392dp"
+        android:fontFamily="casual"
+        android:text="@string/mapDetailVent"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_Celsius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="casual"
+        android:text="@string/Celsius"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/Signaler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="420dp"
+        android:text="@string/Signaler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_precipitations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="540dp"
+        android:fontFamily="casual"
+        android:text="@string/Precipitation"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_hint1"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="360dp"
+        android:fontFamily="casual"
+        android:text="@string/Tous"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/cameraBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="620dp"
+        android:layout_marginTop="572dp"
         android:background="@android:drawable/ic_menu_camera"
         android:backgroundTint="@color/design_default_color_on_secondary"
         app:layout_constraintStart_toStartOf="parent"
@@ -364,8 +370,8 @@
         android:id="@+id/post_picName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="630dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="584dp"
         android:text="@string/CameraHint"
         android:textColor="@android:color/tertiary_text_light"
         android:textSize="16sp"
@@ -376,8 +382,8 @@
         android:id="@+id/bitMap"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="620dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="572dp"
         android:contentDescription="@string/image"
         app:layout_constraintStart_toEndOf="@+id/post_picName"
         app:layout_constraintTop_toTopOf="parent" />

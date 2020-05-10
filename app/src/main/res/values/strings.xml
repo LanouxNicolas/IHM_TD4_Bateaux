@@ -33,7 +33,7 @@
 
     <!--  MapDetail Page Strings  -->
     <string name="mapDetailReturn">Retour à la carte</string>
-    <string name="mapDetailTitle">Alerte mééeo</string>
+    <string name="mapDetailTitle">Alerte météo</string>
     <string name="mapDetailDetails">Détails :</string>
     <string name="mapDetailDernierReleve">Dernier relevé :</string>
     <string name="mapDetailVent">Vent :</string>
