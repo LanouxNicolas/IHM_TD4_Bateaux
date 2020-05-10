@@ -1,18 +1,21 @@
 package com.ihm.seawatch.fragments;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import android.content.DialogInterface;
-import androidx.appcompat.app.AlertDialog;
 
-import com.example.myapplication.R;
+import com.ihm.seawatch.R;
 
 public class HomePage extends Fragment {
 
@@ -65,12 +68,19 @@ public class HomePage extends Fragment {
             }
         });
 
+        // Contact developers
+        view.findViewById(R.id.contact_dev).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                composeEmail(new String[] { "dev@seawatch.com" }, "Email envoyé depuis l'application");
+            }
+        });
     }
 
     // Change switch value
-    private void alert(final Boolean isChecked){
+    private void alert(final Boolean isChecked) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.requireActivity());
-        if(isChecked){
+        if (isChecked) {
             dialogBuilder.setMessage("Activer la localisation ?")
                     .setCancelable(false)
                     .setNegativeButton("Oui", new DialogInterface.OnClickListener() {
@@ -89,6 +99,16 @@ public class HomePage extends Fragment {
             AlertDialog alert = dialogBuilder.create();
             alert.setTitle("Localisation");
             alert.show();
+        }
+    }
+
+    private void composeEmail(String[] addresses, String subject) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
         }
     }
 }

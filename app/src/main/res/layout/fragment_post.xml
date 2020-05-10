@@ -215,7 +215,7 @@
         android:dropDownWidth="match_parent"
         android:entries="@array/windDirection"
         android:spinnerMode="dropdown"
-        app:layout_constraintStart_toEndOf="@+id/post_corant"
+        app:layout_constraintStart_toEndOf="@+id/post_courant"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -275,7 +275,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/post_corant"
+        android:id="@+id/post_courant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
