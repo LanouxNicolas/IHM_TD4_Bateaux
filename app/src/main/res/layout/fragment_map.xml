@@ -60,16 +60,20 @@
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
+    <org.osmdroid.views.MapView
         android:id="@+id/map"
+<<<<<<< HEAD
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
+=======
+        android:layout_width="411dp"
+>>>>>>> origin/develop-osm
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/button_mapToHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

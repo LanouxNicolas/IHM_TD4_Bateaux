@@ -1,7 +1,9 @@
 package com.ihm.seawatch.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,17 +19,25 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.ihm.seawatch.R;
 
+import static com.ihm.seawatch.fragments.Map.LOCATION_PERMS;
+import static com.ihm.seawatch.fragments.Map.LOCATION_REQUEST;
+
 public class HomePage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_homepage, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
+        Switch swi = rootView.findViewById(R.id.gpsSwitch);
+        LocationManager mLocationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean isChecked = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        swi.setChecked(isChecked);
+        return rootView;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Switch swi = view.findViewById(R.id.gpsSwitch);
+        final Switch swi = view.findViewById(R.id.gpsSwitch);
         // GPS Switch
         swi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -86,6 +96,8 @@ public class HomePage extends Fragment {
                     .setNegativeButton("Oui", new DialogInterface.OnClickListener() {
                         @Override public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+                            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
                             swi.setChecked(true);
                         }
@@ -93,12 +105,17 @@ public class HomePage extends Fragment {
                     .setPositiveButton("Non", new DialogInterface.OnClickListener() {
                         @Override public void onClick(DialogInterface dialog, int which) {
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
+                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
                             swi.setChecked(false);
                         }
                     });
             AlertDialog alert = dialogBuilder.create();
             alert.setTitle("Localisation");
             alert.show();
+        } else {
+            Switch swi = getView().findViewById(R.id.gpsSwitch);
+            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+            swi.setChecked(false);
         }
     }
 

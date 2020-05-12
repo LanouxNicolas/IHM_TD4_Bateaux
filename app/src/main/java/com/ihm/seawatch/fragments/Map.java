@@ -1,51 +1,88 @@
 package com.ihm.seawatch.fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.ihm.seawatch.R;
 
-public class Map extends Fragment implements OnMapReadyCallback {
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-    private GoogleMap theMap;
-    private MapView mMapView = null;
-    private LatLng point;
-    private int REQUEST_CODE_LOCATION_PERMISSION = 1;
+public class Map extends Fragment {
+
+    private MapView mMapView;
+    private LocationManager mLocationManager;
+
+    public static final String[] LOCATION_PERMS = { Manifest.permission.ACCESS_FINE_LOCATION };
+    public static final int LOCATION_REQUEST = 1340;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        mMapView = rootView.findViewById(R.id.map);
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mMapView.setTileSource(TileSourceFactory.MAPNIK); // Render
+        mLocationManager = (LocationManager) this.requireContext().getSystemService(Context.LOCATION_SERVICE);
+
+        Context context = this.requireContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+
+        // My Location
+        GpsMyLocationProvider provider = new GpsMyLocationProvider(context);
+        provider.addLocationSource(LocationManager.NETWORK_PROVIDER);
+        provider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+        provider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);;
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(provider, mMapView);
+        mLocationOverlay.enableMyLocation();
+        mMapView.getOverlays().add(mLocationOverlay);
+
+        // Needed for pinch zooms
+        mMapView.setMultiTouchControls(true);
+
+        IMapController mapController = mMapView.getController();
+        mapController.setZoom(15.0);
+
+        mMapView.setExpectedCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get coordinates and punctuation function under onMapReady
-
-        // MapView initialization
-        mMapView = view.findViewById(R.id.map);
-        initGoogleMap(savedInstanceState);
 
         // Open the mark button on the map
         // The button visibility is set to gone by me and changed in the fragment_map_details.xml layout
@@ -67,119 +104,33 @@ public class Map extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    // Obtain GPS positioning
-    private void getLocation() {
-        // The query window of location permission when running for the first time, this can be directly obtained from the switch of the main interface
-        if (ContextCompat.checkSelfPermission(this.requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this.requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
-        } else {
-            // Get the coordinates
-            getCurrentLocation();
-        }
-    }
 
-    private void getCurrentLocation() {
-        final LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationServices.getFusedLocationProviderClient(this.requireActivity())
-                .requestLocationUpdates(locationRequest, new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        super.onLocationResult(locationResult);
-                        LocationServices.getFusedLocationProviderClient(Map.this.requireActivity())
-                                .removeLocationUpdates(this);
-                        if (locationResult.getLocations().size() > 0) {
-                            int latestLocationIndex = locationResult.getLocations().size() - 1;
-                            double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                            double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            point = new LatLng(latitude, longitude);
-                            theMap.addMarker(new MarkerOptions().position(point).title("Ma position"));
-                            theMap.moveCamera(CameraUpdateFactory.newLatLng(point));
-                        }
-                    }
-                }, Looper.getMainLooper());
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
-            } else {
-                Toast.makeText(this.requireContext(), "Permission refusée", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // Load MapView
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        theMap = googleMap;
-        // Call getLocation() to get the coordinates and punctuation after the map is loaded
-        // Cannot be placed under onViewCreated ()
-        getLocation();
-    }
-
-    private void initGoogleMap(Bundle savedInstanceState){
-        // Important: MapView requires that the Bundle you pass contain _ONLY_ MapView SDK objects or sub-Bundles.
-        Bundle mapViewBundle = null;
-        if (savedInstanceState != null){
-            mapViewBundle = savedInstanceState.getBundle("MapViewBundleKey");
-        }
-        mMapView.onCreate(mapViewBundle);
-        mMapView.getMapAsync(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Bundle mapViewBundle = outState.getBundle("MapViewBundleKey");
-        if (mapViewBundle == null) {
-            mapViewBundle = new Bundle();
-            outState.putBundle("MapViewBundleKey", mapViewBundle);
-        }
-        mMapView.onSaveInstanceState(mapViewBundle);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mMapView.onDetach();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        mMapView.setTileSource(TileSourceFactory.MAPNIK); // Render
         mMapView.onResume();
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mMapView.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mMapView.onStop();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
     }
 }
