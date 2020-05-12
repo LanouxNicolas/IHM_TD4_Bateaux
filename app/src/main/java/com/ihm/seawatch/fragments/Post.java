@@ -51,6 +51,7 @@ public class Post extends Fragment {
     private int notificationId = 0;
     private LocationManager mLocationManager;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_post, container, false);
@@ -92,14 +93,14 @@ public class Post extends Fragment {
                     longitude=Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_E)).getText().toString());
                 }
                 String message ="";
+                String title = "Le post a bien été envoyé";
                 try {
-                    message=((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
+                    message = ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
                 }
                 catch(Exception ignored) {
 
                 }
                 map.addItem("incident",message, new GeoPoint(latitude,longitude));
-                String title = "Le post a bien été envoyé";
 
                 sendNotificationOnChannel(title,message,CHANNEL_3_ID, NotificationCompat.PRIORITY_HIGH);
                 NavHostFragment.findNavController(Post.this)
@@ -111,15 +112,14 @@ public class Post extends Fragment {
             @Override
             public void onClick(View view) {
                 CheckBox checkBox = getActivity().findViewById(R.id.positionActuelle);
-                if (checkBox.isChecked()){
+                if (checkBox.isChecked()) {
                     EditText editText = getActivity().findViewById(R.id.input_E);
                     editText.setBackgroundColor(Color.GRAY);
                     editText.setEnabled(false);
                     EditText editText2 = getActivity().findViewById(R.id.input_N);
                     editText2.setEnabled(false);
                     editText2.setBackgroundColor(Color.GRAY);
-                }
-                else{
+                } else {
                     EditText editText = getActivity().findViewById(R.id.input_E);
                     editText.setEnabled(true);
                     editText.setBackgroundResource(R.drawable.border);
@@ -127,7 +127,6 @@ public class Post extends Fragment {
                     editText2.setEnabled(true);
                     editText2.setBackgroundResource(R.drawable.border);
                 }
-
             }
         });
 

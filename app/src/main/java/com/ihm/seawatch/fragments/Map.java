@@ -87,12 +87,11 @@ public class Map extends Fragment {
         mMapView.setMultiTouchControls(true);
 
         IMapController mapController = mMapView.getController();
-        mapController.setZoom(15.0);
+        mapController.setZoom(14.0);
         mapController.setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
 
-        mMapView.setExpectedCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
-
-        items.add(new OverlayItem("Incident", "Ceci est un message de test", new GeoPoint(location.getLatitude(), location.getLongitude())));
+        items.add(new OverlayItem("Incident", "Ceci est un message de test pour un incident", new GeoPoint(location.getLatitude() + 0.02, location.getLongitude() + 0.01)));
+        items.add(new OverlayItem("Ma position", "Vous avez appuyé sur votre position", new GeoPoint(location.getLatitude(), location.getLongitude())));
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(this.requireContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
