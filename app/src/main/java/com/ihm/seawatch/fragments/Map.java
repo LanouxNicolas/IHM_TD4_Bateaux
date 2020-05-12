@@ -1,22 +1,27 @@
 package com.ihm.seawatch.fragments;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
 import com.ihm.seawatch.R;
 
-import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -25,18 +30,11 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 public class Map extends Fragment {
 
-    private static final String PREFS_NAME = "org.andnav.osm.prefs";
-    private static final String PREFS_TILE_SOURCE = "tilesource";
-    private static final String PREFS_LATITUDE_STRING = "latitudeString";
-    private static final String PREFS_LONGITUDE_STRING = "longitudeString";
-    private static final String PREFS_ORIENTATION = "orientation";
-    private static final String PREFS_ZOOM_LEVEL_DOUBLE = "zoomLevelDouble";
-
-    private static final int MENU_ABOUT = Menu.FIRST + 1;
-
-    private SharedPreferences mPrefs;
     private MapView mMapView;
+    private LocationManager mLocationManager;
 
+    public static final String[] LOCATION_PERMS = { Manifest.permission.ACCESS_FINE_LOCATION };
+    public static final int LOCATION_REQUEST = 1340;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +43,7 @@ public class Map extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         mMapView = rootView.findViewById(R.id.map);
         return rootView;
@@ -55,26 +54,31 @@ public class Map extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mMapView.setTileSource(TileSourceFactory.MAPNIK); // Render
+        mLocationManager = (LocationManager) this.requireContext().getSystemService(Context.LOCATION_SERVICE);
 
-        final Context context = this.getActivity();
-        mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        Context context = this.requireContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
 
         // My Location
-        // Note you have handle the permissions yourself, the overlay did not do it for you
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(context), mMapView);
+        GpsMyLocationProvider provider = new GpsMyLocationProvider(context);
+        provider.addLocationSource(LocationManager.NETWORK_PROVIDER);
+        provider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+        provider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);;
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(provider, mMapView);
         mLocationOverlay.enableMyLocation();
         mMapView.getOverlays().add(mLocationOverlay);
 
         // Needed for pinch zooms
         mMapView.setMultiTouchControls(true);
 
-        // The rest of this is restoring the last map location the user looked at
-        final String latitudeString = mPrefs.getString(PREFS_LATITUDE_STRING, "1.0");
-        final String longitudeString = mPrefs.getString(PREFS_LONGITUDE_STRING, "1.0");
-        final double latitude = Double.parseDouble(latitudeString);
-        final double longitude = Double.parseDouble(longitudeString);
-        mMapView.setExpectedCenter(new GeoPoint(latitude, longitude));
-        Log.d("Location", latitudeString + " " + longitudeString);
+        IMapController mapController = mMapView.getController();
+        mapController.setZoom(15.0);
+
+        mMapView.setExpectedCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -103,15 +107,6 @@ public class Map extends Fragment {
 
     @Override
     public void onPause() {
-        // Save the current location
-        final SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putString(PREFS_TILE_SOURCE, mMapView.getTileProvider().getTileSource().name());
-        edit.putFloat(PREFS_ORIENTATION, mMapView.getMapOrientation());
-        edit.putString(PREFS_LATITUDE_STRING, String.valueOf(mMapView.getMapCenter().getLatitude())); // TODO: Get current latitude
-        edit.putString(PREFS_LONGITUDE_STRING, String.valueOf(mMapView.getMapCenter().getLongitude())); // TODO: Get current longitude
-        edit.putFloat(PREFS_ZOOM_LEVEL_DOUBLE, (float) mMapView.getZoomLevelDouble());
-        edit.apply();
-
         mMapView.onPause();
         super.onPause();
     }
@@ -125,13 +120,17 @@ public class Map extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        final String tileSourceName = mPrefs.getString(PREFS_TILE_SOURCE, TileSourceFactory.DEFAULT_TILE_SOURCE.name());
-        try {
-            final ITileSource tileSource = TileSourceFactory.getTileSource(tileSourceName);
-            mMapView.setTileSource(tileSource);
-        } catch (final IllegalArgumentException e) {
-            mMapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-        }
+        if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        mMapView.setTileSource(TileSourceFactory.MAPNIK); // Render
         mMapView.onResume();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
     }
 }
