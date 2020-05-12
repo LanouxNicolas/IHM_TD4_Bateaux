@@ -62,12 +62,8 @@
 
     <org.osmdroid.views.MapView
         android:id="@+id/map"
-<<<<<<< HEAD
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-=======
-        android:layout_width="411dp"
->>>>>>> origin/develop-osm
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/button_mapToHome"
         app:layout_constraintEnd_toEndOf="parent"
