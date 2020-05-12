@@ -40,7 +40,7 @@ public class Post extends Fragment{
     private final int REQUEST_CODE = 42;
     private final String FILE_NAME = "photo.jpg";
     private File photoFile;
-    private int notificationId=0;
+    private int notificationId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +55,9 @@ public class Post extends Fragment{
             @Override
             public void onClick(View view) {
                 String title = "Le post a bien été envoyé";
-                String message= "";
+                String message = "";
                 try {
-                    message=((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
+                    message = ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
                 }
                 catch(Exception ignored) {
 
@@ -72,15 +72,14 @@ public class Post extends Fragment{
             @Override
             public void onClick(View view) {
                 CheckBox checkBox = getActivity().findViewById(R.id.positionActuelle);
-                if (checkBox.isChecked()){
+                if (checkBox.isChecked()) {
                     EditText editText = getActivity().findViewById(R.id.input_E);
                     editText.setBackgroundColor(Color.GRAY);
                     editText.setEnabled(false);
                     EditText editText2 = getActivity().findViewById(R.id.input_N);
                     editText2.setEnabled(false);
                     editText2.setBackgroundColor(Color.GRAY);
-                }
-                else{
+                } else {
                     EditText editText = getActivity().findViewById(R.id.input_E);
                     editText.setEnabled(true);
                     editText.setBackgroundResource(R.drawable.border);
@@ -88,7 +87,6 @@ public class Post extends Fragment{
                     editText2.setEnabled(true);
                     editText2.setBackgroundResource(R.drawable.border);
                 }
-
             }
         });
 

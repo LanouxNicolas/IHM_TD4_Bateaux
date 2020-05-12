@@ -9,9 +9,9 @@ import java.util.Objects;
 
 public class Notifications extends Application {
 
-    public static final String CHANNEL_1_ID = "channel LOW";
-    public static final String CHANNEL_2_ID = "channel DEFAULT";
-    public static final String CHANNEL_3_ID = "channel HIGH";
+    public static final String CHANNEL_1_ID = "Channel Low";
+    public static final String CHANNEL_2_ID = "channel Default";
+    public static final String CHANNEL_3_ID = "channel High";
     private static NotificationManager notificationManager;
 
     private NotificationChannel createNotificationChannel(String channelId, CharSequence name, int importance, String channelDescription) {
