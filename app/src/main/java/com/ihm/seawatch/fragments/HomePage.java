@@ -1,7 +1,10 @@
 package com.ihm.seawatch.fragments;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,9 +22,17 @@ import com.ihm.seawatch.R;
 
 public class HomePage extends Fragment {
 
+    private static final String[] LOCATION_PERMS = { Manifest.permission.ACCESS_FINE_LOCATION };
+    private static final int LOCATION_REQUEST = 1340;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_homepage, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
+        Switch swi = rootView.findViewById(R.id.gpsSwitch);
+        LocationManager mLocationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean isChecked = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        swi.setChecked(isChecked);
+        return rootView;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -83,16 +94,19 @@ public class HomePage extends Fragment {
         if (isChecked) {
             dialogBuilder.setMessage("Activer la localisation ?")
                     .setCancelable(false)
-                    .setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         @Override public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+                            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
                             swi.setChecked(true);
                         }
                     })
-                    .setPositiveButton("Non", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                         @Override public void onClick(DialogInterface dialog, int which) {
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
+                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
                             swi.setChecked(false);
                         }
                     });
