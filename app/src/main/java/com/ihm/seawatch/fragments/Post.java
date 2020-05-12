@@ -1,10 +1,15 @@
 package com.ihm.seawatch.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.FileProvider;
@@ -29,6 +35,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.ihm.seawatch.R;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -36,11 +44,12 @@ import static com.ihm.seawatch.fragments.Notifications.CHANNEL_1_ID;
 import static com.ihm.seawatch.fragments.Notifications.CHANNEL_2_ID;
 import static com.ihm.seawatch.fragments.Notifications.CHANNEL_3_ID;
 
-public class Post extends Fragment{
+public class Post extends Fragment {
     private final int REQUEST_CODE = 42;
     private final String FILE_NAME = "photo.jpg";
     private File photoFile;
-    private int notificationId=0;
+    private int notificationId = 0;
+    private LocationManager mLocationManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,14 +63,44 @@ public class Post extends Fragment{
         view.findViewById(R.id.button_toHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = "Le post a bien été envoyé";
-                String message= "";
+                Map map = new Map();
+                CheckBox checkBox = getActivity().findViewById(R.id.positionActuelle);
+                double latitude = 0;
+                double longitude = 0;
+                if (checkBox.isChecked()) {
+                    try{
+                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);;
+                        latitude=location.getLatitude();
+                        longitude=location.getLongitude();
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else{
+                    latitude=Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_N)).getText().toString());
+                    longitude=Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_E)).getText().toString());
+                }
+                String message ="";
                 try {
                     message=((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
                 }
                 catch(Exception ignored) {
 
                 }
+                map.addItem("incident",message, new GeoPoint(latitude,longitude));
+                String title = "Le post a bien été envoyé";
+
                 sendNotificationOnChannel(title,message,CHANNEL_3_ID, NotificationCompat.PRIORITY_HIGH);
                 NavHostFragment.findNavController(Post.this)
                         .navigate(R.id.action_ThirdFragment_to_FirstFragment);

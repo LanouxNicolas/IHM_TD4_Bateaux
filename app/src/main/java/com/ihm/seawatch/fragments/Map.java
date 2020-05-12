@@ -74,6 +74,7 @@ public class Map extends Fragment {
         provider.addLocationSource(LocationManager.NETWORK_PROVIDER);
         provider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
         provider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+
         if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -162,5 +163,9 @@ public class Map extends Fragment {
         if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }
+    }
+
+    public void addItem(String title,String message,GeoPoint geopoint){
+        items.add(new OverlayItem(title, message, geopoint));
     }
 }
