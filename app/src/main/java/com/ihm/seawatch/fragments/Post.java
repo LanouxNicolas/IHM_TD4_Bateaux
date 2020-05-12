@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,6 +67,32 @@ public class Post extends Fragment{
 
                 NavHostFragment.findNavController(Post.this)
                         .navigate(R.id.action_ThirdFragment_to_FirstFragment);
+            }
+        });
+
+        view.findViewById(R.id.positionActuelle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CheckBox checkBox = (CheckBox)getActivity().findViewById(R.id.positionActuelle);
+                if (checkBox.isChecked()){
+                    EditText editText = (EditText)getActivity().findViewById(R.id.input_E);
+                    editText.setBackgroundColor(Color.GRAY);
+                    editText.setEnabled(false);
+                    EditText editText2 = (EditText)getActivity().findViewById(R.id.input_N);
+                    editText2.setEnabled(false);
+                    editText2.setBackgroundColor(Color.GRAY);
+                }
+                else{
+                    EditText editText = (EditText)getActivity().findViewById(R.id.input_E);
+                    editText.setEnabled(true);
+                    editText.setBackgroundResource(R.drawable.border);
+                    //editText.setBackgroundColor(Color.WHITE);
+                    EditText editText2 = (EditText)getActivity().findViewById(R.id.input_N);
+                    editText2.setEnabled(true);
+                    editText2.setBackgroundResource(R.drawable.border);
+                    //editText2.setBackgroundColor(Color.WHITE);
+                }
+
             }
         });
 
