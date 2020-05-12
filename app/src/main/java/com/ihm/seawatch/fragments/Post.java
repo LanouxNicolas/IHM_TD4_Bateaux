@@ -71,7 +71,7 @@ public class Post extends Fragment{
         view.findViewById(R.id.positionActuelle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckBox checkBox = (getActivity().findViewById(R.id.positionActuelle);
+                CheckBox checkBox = getActivity().findViewById(R.id.positionActuelle);
                 if (checkBox.isChecked()){
                     EditText editText = getActivity().findViewById(R.id.input_E);
                     editText.setBackgroundColor(Color.GRAY);
