@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 onBackPressed(); // Close the app if we're in HomePage
             }
         });
+
     }
 
     @Override
@@ -43,4 +45,5 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
     }
+
 }
