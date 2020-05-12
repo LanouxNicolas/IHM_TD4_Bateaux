@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -29,7 +30,9 @@ import com.ihm.seawatch.R;
 import java.io.File;
 import java.io.IOException;
 
-import static com.ihm.seawatch.fragments.Notifications.CHANNEL_ID;
+import static com.ihm.seawatch.fragments.Notifications.CHANNEL_1_ID;
+import static com.ihm.seawatch.fragments.Notifications.CHANNEL_2_ID;
+import static com.ihm.seawatch.fragments.Notifications.CHANNEL_3_ID;
 
 public class Post extends Fragment{
     private final int REQUEST_CODE = 42;
@@ -53,12 +56,12 @@ public class Post extends Fragment{
                 String title = "Your post has been sent";
                 String message= "Sea Watch";
                 try {
-                    message=((EditText)view.findViewById(R.id.detail_input)).getText().toString();
+                    message=((EditText)getActivity().findViewById(R.id.detail_input)).getText().toString();
                 }
                 catch(Exception e){
 
                 }
-                sendNotificationOnChannel(title,message,CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+                sendNotificationOnChannel(title,message,CHANNEL_3_ID, NotificationCompat.PRIORITY_HIGH);
 
                 NavHostFragment.findNavController(Post.this)
                         .navigate(R.id.action_ThirdFragment_to_FirstFragment);
@@ -90,15 +93,6 @@ public class Post extends Fragment{
                 }
             }
         });
-
-       // view.findViewById(R.id.button_toHome).setOnClickListener(new View.OnClickListener(){
-       //     @Override
-       //     public void onClick(View v){
-       //         String title = "Your post has been sent";
-       //         String message=((EditText)v.findViewById(R.id.detail_input)).getText().toString();
-       //         sendNotificationOnChannel(title,message,CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
-       //     }
-       // });
     }
 
     @Override
@@ -122,11 +116,12 @@ public class Post extends Fragment{
 
     private void sendNotificationOnChannel(String title, String message, String channelId, int priority) {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getActivity().getApplicationContext(),channelId)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.app_launcher_round)
+                .setLargeIcon(BitmapFactory.decodeResource(getActivity().getApplicationContext().getResources(), R.drawable.app_launcher_round))
                 .setContentTitle(title)
-                .setContentText("SeaWatch :"+message)
+                .setContentText(message)
                 .setPriority(priority);
-        Notifications.getNotificationManager().notify(++notificationId,notification.build());
+        NotificationManagerCompat.from(getActivity()).notify(++notificationId,notification.build());
 
     }
 }
