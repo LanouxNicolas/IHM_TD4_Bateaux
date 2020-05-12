@@ -15,7 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.ihm.seawatch.R;
 
 public class MainActivity extends AppCompatActivity {
-
+//teste ici c'est la version avec google map
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
