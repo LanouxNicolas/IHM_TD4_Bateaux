@@ -3,11 +3,11 @@ package com.ihm.seawatch.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +33,6 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Map extends Fragment {
@@ -54,20 +53,31 @@ public class Map extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        mMapView = rootView.findViewById(R.id.map);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mMapView = this.requireView().findViewById(R.id.map);
         mMapView.setTileSource(TileSourceFactory.MAPNIK); // Render
         mLocationManager = (LocationManager) this.requireContext().getSystemService(Context.LOCATION_SERVICE);
 
         Context context = this.requireContext();
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+
+        SQLiteDatabase sqLiteDatabase = requireContext().openOrCreateDatabase("geopoints.db", Context.MODE_PRIVATE, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Incidents",null);
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                double latitude = cursor.getDouble(0);
+                double longitude = cursor.getDouble(1);
+                String details = cursor.getString(2);
+                items.add(new OverlayItem("Incident", details, new GeoPoint(latitude, longitude)));
+            }
+        }
+        sqLiteDatabase.close();
 
         // My Location
         GpsMyLocationProvider provider = new GpsMyLocationProvider(context);
@@ -91,7 +101,6 @@ public class Map extends Fragment {
         mapController.setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
 
         items.add(new OverlayItem("Incident", "Ceci est un message de test pour un incident", new GeoPoint(location.getLatitude() + 0.02, location.getLongitude() + 0.01)));
-        items.add(new OverlayItem("Ma position", "Vous avez appuyé sur votre position", new GeoPoint(location.getLatitude(), location.getLongitude())));
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(this.requireContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
@@ -162,9 +171,5 @@ public class Map extends Fragment {
         if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }
-    }
-
-    public void addItem(String title,String message,GeoPoint geopoint){
-        items.add(new OverlayItem(title, message, geopoint));
     }
 }

@@ -3,6 +3,7 @@ package com.ihm.seawatch.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import static com.ihm.seawatch.fragments.Map.LOCATION_REQUEST;
 
 public class HomePage extends Fragment {
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
@@ -36,6 +38,12 @@ public class HomePage extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        // Create Database in local to add points
+        SQLiteDatabase sqLiteDatabase = requireContext().openOrCreateDatabase("geopoints.db", Context.MODE_PRIVATE, null);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Incidents(Latitude REAL, Longitude REAL, Details TEXT);");
+        sqLiteDatabase.close();
 
         final Switch swi = view.findViewById(R.id.gpsSwitch);
         // GPS Switch

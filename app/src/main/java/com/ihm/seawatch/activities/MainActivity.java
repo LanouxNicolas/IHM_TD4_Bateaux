@@ -5,14 +5,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ihm.seawatch.R;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

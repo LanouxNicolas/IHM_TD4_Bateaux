@@ -1,12 +1,20 @@
 # Projet IHM - TD4 Bateaux
 ## Sea Watch 
 
-### État du projet :
-* [Mise en place d'un formulaire pour signaler un incident](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/milestone/2)
+### Sommaire
+
+* [État du projet](#état-du-projet)
+* [Les différents répertoires](#les-différents-répertoires)
+* [Auteurs](#auteurs)
 
 -----------------
 
-### Les différents répertoires :
+### État du projet
+[Mise en place d'une base de donnée locale pour sauvegarder les incidents enregistrés](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/milestone/4)
+
+-----------------
+
+### Les différents répertoires
 * Les __activités__ : [_activities_](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/tree/master/app/src/main/java/com/ihm/seawatch/activities)
 * Les __fragments__ : [_fragments_](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/tree/master/app/src/main/java/com/ihm/seawatch/fragments)
 * Les fichiers __.xml__ le _layout_ : [_*.xml_](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/tree/master/app/src/main/res/layout)

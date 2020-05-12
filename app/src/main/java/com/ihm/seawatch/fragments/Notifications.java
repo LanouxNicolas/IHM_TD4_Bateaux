@@ -10,9 +10,8 @@ import java.util.Objects;
 public class Notifications extends Application {
 
     public static final String CHANNEL_1_ID = "Channel Low";
-    public static final String CHANNEL_2_ID = "channel Default";
-    public static final String CHANNEL_3_ID = "channel High";
-    private static NotificationManager notificationManager;
+    public static final String CHANNEL_2_ID = "Channel Default";
+    public static final String CHANNEL_3_ID = "Channel High";
 
     private NotificationChannel createNotificationChannel(String channelId, CharSequence name, int importance, String channelDescription) {
         // Créer le NotificationChannel, seulement pour API 26+
