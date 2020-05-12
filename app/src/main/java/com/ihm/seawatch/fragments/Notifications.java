@@ -15,22 +15,18 @@ public class Notifications extends Application {
         return notificationManager;
     }
 
-
     private void createNotificationChannel(String title, String message, int importance) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,title,importance);
             channel.setDescription(message);
             notificationManager = getSystemService(NotificationManager.class);
             Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
-
         }
     }
 
     @Override
     public void onCreate(){
         super.onCreate();
-        createNotificationChannel("title","message", NotificationManager.IMPORTANCE_DEFAULT);
+        createNotificationChannel("Sea Watch","Notification", NotificationManager.IMPORTANCE_DEFAULT);
     }
-
-
 }

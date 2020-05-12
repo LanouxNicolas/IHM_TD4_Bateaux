@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_FourthFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <argument
+            android:name="details"
+            app:argType="string" />
     </fragment>
 
     <!--  Toolbar  -->

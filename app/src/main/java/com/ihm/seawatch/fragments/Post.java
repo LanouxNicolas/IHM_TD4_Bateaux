@@ -26,16 +26,22 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.ihm.seawatch.R;
 
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.OverlayItem;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.ihm.seawatch.fragments.Notifications.CHANNEL_ID;
 
-public class Post extends Fragment{
+public class Post extends Fragment {
+
     private final int REQUEST_CODE = 42;
     private final String FILE_NAME = "photo.jpg";
     private File photoFile;
-    private int notificationId=0;
+    private int notificationId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,17 +55,17 @@ public class Post extends Fragment{
         view.findViewById(R.id.button_toHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //sendNotificationOnChannel( "title", "message", CHANNEL_1_ID, NotificationCompat.PRIORITY_LOW );
-                String title = "Your post has been sent";
-                String message= "Sea Watch";
+                String title = "Votre poste a bien été envoyé";
+                String message = "";
                 try {
-                    message=((EditText)view.findViewById(R.id.detail_input)).getText().toString();
-                }
-                catch(Exception e){
+                    message = ((EditText) view.findViewById(R.id.detail_input)).getText().toString();
+                } catch(Exception ignored) {
 
                 }
-                sendNotificationOnChannel(title,message,CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+                double latitude = Double.parseDouble(((EditText) view.findViewById(R.id.input_N)).getText().toString());
+                double longitude = Double.parseDouble(((EditText) view.findViewById(R.id.input_E)).getText().toString());
 
+                sendNotificationOnChannel(title, message, CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
                 NavHostFragment.findNavController(Post.this)
                         .navigate(R.id.action_ThirdFragment_to_FirstFragment);
             }
@@ -95,7 +101,7 @@ public class Post extends Fragment{
        //     @Override
        //     public void onClick(View v){
        //         String title = "Your post has been sent";
-       //         String message=((EditText)v.findViewById(R.id.detail_input)).getText().toString();
+       //         String message=((EditText) v.findViewById(R.id.detail_input)).getText().toString();
        //         sendNotificationOnChannel(title,message,CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
        //     }
        // });
@@ -124,9 +130,8 @@ public class Post extends Fragment{
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getActivity().getApplicationContext(),channelId)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
-                .setContentText("SeaWatch :"+message)
+                .setContentText(message)
                 .setPriority(priority);
-        Notifications.getNotificationManager().notify(++notificationId,notification.build());
-
+        Notifications.getNotificationManager().notify(++notificationId, notification.build());
     }
 }

@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +27,24 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class Map extends Fragment {
+
+    private ArrayList<OverlayItem> items = new ArrayList<>();
 
     private MapView mMapView;
     private LocationManager mLocationManager;
 
-    public static final String[] LOCATION_PERMS = { Manifest.permission.ACCESS_FINE_LOCATION };
-    public static final int LOCATION_REQUEST = 1340;
+    static final String[] LOCATION_PERMS = { Manifest.permission.ACCESS_FINE_LOCATION };
+    static final int LOCATION_REQUEST = 1340;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,8 +87,29 @@ public class Map extends Fragment {
 
         IMapController mapController = mMapView.getController();
         mapController.setZoom(15.0);
+        mapController.setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
 
         mMapView.setExpectedCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
+
+        items.add(new OverlayItem("Incident", "Ceci est un message de test", new GeoPoint(location.getLatitude(), location.getLongitude())));
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(this.requireContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                String details = item.getSnippet();
+                Bundle bundle = new Bundle();
+                bundle.putString("detailsInput", details);
+                NavHostFragment.findNavController(Map.this)
+                        .navigate(R.id.action_SecondFragment_to_FourthFragment, bundle);
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
+            }
+        });
+        mOverlay.setFocusItemsOnTap(true);
+        mMapView.getOverlays().add(mOverlay);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -103,7 +134,6 @@ public class Map extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onPause() {

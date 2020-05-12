@@ -1,5 +1,5 @@
 # Projet IHM - TD4 Bateaux
-## SeaWatch 
+## Sea Watch 
 
 ### État du projet :
 * [Mise en place d'un formulaire pour signaler un incident](https://github.com/LanouxNicolas/IHM_TD4_Bateaux/milestone/2)
