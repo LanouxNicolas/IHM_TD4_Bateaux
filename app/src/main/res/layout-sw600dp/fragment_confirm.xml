@@ -3,7 +3,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
 
-    
+        <TextView
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Merci d'avoir publié des informations sur notre application ! Si vous voulez nous aider, pensez à partager votre avis sur notre application sur Facebook :"
+            android:textSize="25dp"
+            android:gravity="center"
+            ></TextView>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+    <Button
+        android:layout_marginLeft="25dp"
+        android:id="@+id/button_toHome"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="casual"
+        android:text="Retour"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+        <com.facebook.share.widget.ShareButton
+            android:width="150dp"
+            android:height="50dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="1dp"
+            android:textSize="15sp"
+            android:id="@+id/fb_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/com_facebook_blue"
+            android:contentDescription="Share"
+            android:layout_centerHorizontal="true"/>
+
+
+
+    </LinearLayout>
 </LinearLayout>
