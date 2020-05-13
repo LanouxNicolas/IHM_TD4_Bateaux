@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,10 @@ import com.ihm.seawatch.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.ihm.seawatch.fragments.Notifications.CHANNEL_3_ID;
 
@@ -59,6 +64,9 @@ public class Post extends Fragment {
 
         mLocationManager = (LocationManager) this.requireContext().getSystemService(Context.LOCATION_SERVICE);
 
+
+
+
         // Return to menu
         view.findViewById(R.id.button_toHome).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,14 +83,12 @@ public class Post extends Fragment {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                     } catch(Exception ignored) {
-
                     }
                 } else {
                     try {
                         latitude = Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_N)).getText().toString());
                         longitude = Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_E)).getText().toString());
                     } catch (Exception ignored) {
-
                     }
                 }
                 String message = "";
@@ -90,14 +96,29 @@ public class Post extends Fragment {
                 try {
                     message = ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
                 } catch(Exception ignored) {
-
                 }
+
+                Calendar calendar = Calendar.getInstance();
+                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
                 SQLiteDatabase sqLiteDatabase = requireContext().openOrCreateDatabase("geopoints.db", Context.MODE_PRIVATE, null);
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("Latitude", latitude);
                 contentValues.put("Longitude", longitude);
                 contentValues.put("Details", message);
+                contentValues.put("Date",currentDate);
+                String tmp = null;
+                tmp = ((TextView) getActivity().findViewById(R.id.input_temperature)).getText().toString();
+                contentValues.put("Temperature",tmp);
+                tmp = ((Spinner) getActivity().findViewById(R.id.post_spinner2)).getSelectedItem().toString();
+                contentValues.put("Courant",tmp);
+                tmp = ((TextView) getActivity().findViewById(R.id.input_vent)).getText().toString();
+                contentValues.put("Vent",tmp);
+
+                tmp = ((TextView) getActivity().findViewById(R.id.input_precipitations)).getText().toString();
+                contentValues.put("Precipitations",tmp);
+                //contentValues.put("DirectionVent",tmp);
+                //contentValues.put("DirectionCourant",tmp);
                 sqLiteDatabase.insert("Incidents", null, contentValues);
                 sqLiteDatabase.close();
 

@@ -52,7 +52,7 @@ public class HomePage extends Fragment {
 
         // Create Database in local to add points
         SQLiteDatabase sqLiteDatabase = requireContext().openOrCreateDatabase("geopoints.db", Context.MODE_PRIVATE, null);
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Incidents(Latitude REAL, Longitude REAL, Details TEXT);");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Incidents(Latitude REAL, Longitude REAL, Details TEXT, Date TEXT,Temperature TEXT,Courant TEXT,Vent TEXT,DirectionVent TEXT,DirectionCourant TEXT,Precipitations TEXT);");
         sqLiteDatabase.close();
 
         final Switch swi = view.findViewById(R.id.gpsSwitch);
