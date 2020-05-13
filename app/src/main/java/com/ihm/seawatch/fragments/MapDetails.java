@@ -19,21 +19,40 @@ public class MapDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_map_details, container, false);
         String[] elements = getArguments().getString("everything").split("///");
 
-
         TextView textView = rootView.findViewById(R.id.detail_input);
-        textView.setText(elements[0]);
+        if(elements.length > 0) {
+            textView.setText(elements[0]);
+        }else{
+            return rootView;
+        }
 
         TextView textView2 = rootView.findViewById(R.id.mapDetail_time);
-        textView2.setText(elements[1]);
-
-        TextView textView3 = rootView.findViewById(R.id.mapDetail_detail1);
-        textView3.setText(elements[4]);
+        if(elements.length > 1) {
+            textView2.setText(elements[1]);
+        }else{
+            return rootView;
+        }
 
         TextView textView4 = rootView.findViewById(R.id.mapDetail_detail2);
-        textView4.setText(elements[2]);
+        if(elements.length > 2) {
+            textView4.setText(elements[2]+" °C");
+        }else{
+            return rootView;
+        }
+
+        TextView textView3 = rootView.findViewById(R.id.mapDetail_detail1);
+        if(elements.length > 4) {
+            textView3.setText(elements[4]+" km/h");
+        }else{
+            return rootView;
+        }
 
         TextView textView5 = rootView.findViewById(R.id.mapDetail_detail3);
-        textView5.setText(elements[5]);
+        if(elements.length > 5) {
+            textView5.setText(elements[5]+" mm/min");
+        }else{
+            return rootView;
+        }
 
         System.out.println(getArguments().getString("Date"));
 
