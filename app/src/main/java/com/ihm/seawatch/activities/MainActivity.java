@@ -1,6 +1,7 @@
 package com.ihm.seawatch.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,10 +24,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         findViewById(R.id.AppName).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed(); // Close the app if we're in HomePage
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),MainActivity.class);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
