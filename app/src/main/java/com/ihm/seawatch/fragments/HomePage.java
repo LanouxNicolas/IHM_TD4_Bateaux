@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import static com.ihm.seawatch.fragments.Map.LOCATION_PERMS;
 import static com.ihm.seawatch.fragments.Map.LOCATION_REQUEST;
 
 public class HomePage extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class HomePage extends Fragment {
             }
         });
     }
+
 
     // Change switch value
     private void alert(final Boolean isChecked) {
