@@ -103,7 +103,7 @@ public class Post extends Fragment {
 
                 sendNotificationOnChannel(title, message, CHANNEL_3_ID, NotificationCompat.PRIORITY_HIGH);
                 NavHostFragment.findNavController(Post.this)
-                        .navigate(R.id.action_ThirdFragment_to_FirstFragment);
+                        .navigate(R.id.action_ThirdFragment_to_SixthFragment);
             }
         });
 

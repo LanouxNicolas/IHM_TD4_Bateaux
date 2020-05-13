@@ -20,6 +20,8 @@
             app:destination="@id/ThirdFragment" />
     </fragment>
 
+
+
     <!--  Map page  -->
     <fragment
         android:id="@+id/SecondFragment"
@@ -43,8 +45,8 @@
         tools:layout="@layout/fragment_post">
 
         <action
-            android:id="@+id/action_ThirdFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_ThirdFragment_to_SixthFragment"
+            app:destination="@id/SixthFragment" />
     </fragment>
 
     <!--  Map detail page  -->
@@ -71,6 +73,18 @@
 
         <action
             android:id="@+id/action_FifthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <!--  Confirm page  -->
+    <fragment
+        android:id="@+id/SixthFragment"
+        android:name="com.ihm.seawatch.fragments.Confirm"
+        android:label="Confirm"
+        tools:layout="@layout/fragment_confirm">
+
+        <action
+            android:id="@+id/action_SixthFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 

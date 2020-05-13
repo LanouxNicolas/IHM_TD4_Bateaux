@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.ihm.seawatch">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,6 +16,8 @@
         android:roundIcon="@mipmap/app_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -31,6 +35,11 @@
                 android:resource="@xml/fileprovider"/>
         </provider>
 
+        <provider android:authorities="com.facebook.app.FacebookContentProvider{@string/facebook_app_id}"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
+
         <activity
             android:name="com.ihm.seawatch.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -45,6 +54,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:theme="@style/com_facebook_activity_theme"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            />
     </application>
 
 </manifest>

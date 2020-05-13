@@ -18,6 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
 import com.ihm.seawatch.R;
 
 import static com.ihm.seawatch.fragments.Map.LOCATION_PERMS;
@@ -33,6 +37,17 @@ public class HomePage extends Fragment {
         LocationManager mLocationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean isChecked = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         swi.setChecked(isChecked);
+
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://www.facebook.com/SeaWatch-101141728277356"))
+                .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("#JoinUsOnSeaWatch")
+                        .build())
+                .build();
+
+        ShareButton shareButton = (ShareButton) rootView.findViewById(R.id.home_share);
+        shareButton.setShareContent(content);
+
         return rootView;
     }
 

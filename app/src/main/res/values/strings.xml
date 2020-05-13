@@ -69,4 +69,5 @@
     <string name="postDetailHint">Vous pouvez rajouter des détails ici</string>
         <string name="CameraHint">(Ajouter une image)</string>
     <string name="image">Image</string>
+    <string name="facebook_app_id">921088644994193</string>
 </resources>
