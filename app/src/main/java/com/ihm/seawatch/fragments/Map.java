@@ -72,16 +72,21 @@ public class Map extends Fragment {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Incidents",null);
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
-                for (String tmp : cursor.getColumnNames())
-                System.out.println("Column : "+tmp);
                 double latitude = cursor.getDouble(0);
                 double longitude = cursor.getDouble(1);
-                String details = cursor.getString(2);
-                String date = cursor.getString(3);
-                String temperature = cursor.getString(4);
-                String courant = cursor.getString(5);
-                String vent = cursor.getString(6);
-                String precipitations = cursor.getString(9);
+                String unreferenced = "Aucune donnée";
+                String details = unreferenced;
+                String date = unreferenced ;
+                String temperature = unreferenced;
+                String courant = unreferenced ;
+                String vent = unreferenced;
+                String precipitations = unreferenced;
+                details = cursor.getString(2);
+                date = cursor.getString(3);
+                temperature = cursor.getString(4);
+                courant = cursor.getString(5);
+                vent = cursor.getString(6);
+                precipitations = cursor.getString(9);
                 String everything = details+"///"+date+"///"+temperature+"///"+courant+"///"+vent+"///"+precipitations;
                 items.add(new OverlayItem("Incident", everything, new GeoPoint(latitude, longitude)));
             }

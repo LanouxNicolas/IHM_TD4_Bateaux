@@ -19,9 +19,6 @@ public class MapDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_map_details, container, false);
         String[] elements = getArguments().getString("everything").split("///");
 
-        for(String tmp : elements){
-            System.out.println(tmp);
-        }
 
         TextView textView = rootView.findViewById(R.id.detail_input);
         textView.setText(elements[0]);
