@@ -182,6 +182,15 @@ public class Post extends Fragment {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(priority);
+        try{
+            Bitmap largeicon = BitmapFactory.decodeResource(getResources(),R.drawable.app_launcher_round);
+            notification.setStyle(new NotificationCompat.BigPictureStyle()
+                    .bigPicture(largeicon));
+        }
+        catch(Exception e){
+
+        }
+
         NotificationManagerCompat.from(getActivity()).notify(++notificationId,notification.build());
     }
 }
