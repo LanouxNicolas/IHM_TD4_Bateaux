@@ -185,7 +185,7 @@
         android:background="@drawable/border"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="numberDecimal"
+        android:inputType="numberDecimal|numberSigned"
         android:labelFor="@+id/input_temperature"
         android:paddingStart="2sp"
         android:paddingEnd="2sp"

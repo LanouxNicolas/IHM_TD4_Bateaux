@@ -38,7 +38,7 @@
     <string name="mapDetailDetails">Détails :</string>
     <string name="mapDetailDernierReleve">Dernier relevé :</string>
     <string name="mapDetailVent">Vent :</string>
-    <string name="mapDetailTemperature">Température de l\'eau :</string>
+    <string name="mapDetailTemperature">Temp. de l\'eau (°C) :</string>
     <string name="mapDetailPrecipitations">Précipitations :</string>
     <string name="mapDetailHint">Aucun détail disponible</string>
     <string name="mapDetailDefault">Aucune donnée</string>

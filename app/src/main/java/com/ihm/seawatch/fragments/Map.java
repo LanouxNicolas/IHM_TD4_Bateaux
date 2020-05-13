@@ -74,21 +74,14 @@ public class Map extends Fragment {
             while (cursor.moveToNext()) {
                 double latitude = cursor.getDouble(0);
                 double longitude = cursor.getDouble(1);
-                String unreferenced = "Aucune donnée";
-                String details = unreferenced;
-                String date = unreferenced ;
-                String temperature = unreferenced;
-                String courant = unreferenced ;
-                String vent = unreferenced;
-                String precipitations = unreferenced;
-                details = cursor.getString(2);
-                date = cursor.getString(3);
-                temperature = cursor.getString(4);
-                courant = cursor.getString(5);
-                vent = cursor.getString(6);
-                precipitations = cursor.getString(9);
-                String everything = details+"///"+date+"///"+temperature+"///"+courant+"///"+vent+"///"+precipitations;
-                items.add(new OverlayItem("Incident", everything, new GeoPoint(latitude, longitude)));
+                String details = cursor.getString(2);
+                String date = cursor.getString(3);
+                String temperature = cursor.getString(4);
+                String courant = cursor.getString(5);
+                String vent = cursor.getString(6);
+                String precipitations = cursor.getString(9);
+                String allInfos = details + "///" + date + "///" + temperature + "///" + courant + "///" + vent + "///" + precipitations;
+                items.add(new OverlayItem("Incident", allInfos, new GeoPoint(latitude, longitude)));
             }
         }
         sqLiteDatabase.close();
@@ -120,7 +113,7 @@ public class Map extends Fragment {
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
                 String details = item.getSnippet();
                 Bundle bundle = new Bundle();
-                bundle.putString("everything", details);
+                bundle.putString("AllInformations", details);
                 NavHostFragment.findNavController(Map.this)
                         .navigate(R.id.action_SecondFragment_to_FourthFragment, bundle);
                 return true;

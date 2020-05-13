@@ -17,44 +17,22 @@ public class MapDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map_details, container, false);
-        String[] elements = getArguments().getString("everything").split("///");
+        String[] elements = getArguments().getString("AllInformations").split("///");
 
         TextView textView = rootView.findViewById(R.id.detail_input);
-        if(elements.length > 0) {
-            textView.setText(elements[0]);
-        }else{
-            return rootView;
-        }
+        textView.setText(elements[0]);
 
         TextView textView2 = rootView.findViewById(R.id.mapDetail_time);
-        if(elements.length > 1) {
-            textView2.setText(elements[1]);
-        }else{
-            return rootView;
-        }
-
-        TextView textView4 = rootView.findViewById(R.id.mapDetail_detail2);
-        if(elements.length > 2) {
-            textView4.setText(elements[2]+" °C");
-        }else{
-            return rootView;
-        }
+        textView2.setText(elements[1]);
 
         TextView textView3 = rootView.findViewById(R.id.mapDetail_detail1);
-        if(elements.length > 4) {
-            textView3.setText(elements[4]+" km/h");
-        }else{
-            return rootView;
-        }
+        textView3.setText(elements[4]);
+
+        TextView textView4 = rootView.findViewById(R.id.mapDetail_detail2);
+        textView4.setText(elements[2]);
 
         TextView textView5 = rootView.findViewById(R.id.mapDetail_detail3);
-        if(elements.length > 5) {
-            textView5.setText(elements[5]+" mm/min");
-        }else{
-            return rootView;
-        }
-
-        System.out.println(getArguments().getString("Date"));
+        textView5.setText(elements[5]);
 
         return rootView;
     }

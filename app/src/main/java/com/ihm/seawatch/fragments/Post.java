@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,9 +65,6 @@ public class Post extends Fragment {
 
         mLocationManager = (LocationManager) this.requireContext().getSystemService(Context.LOCATION_SERVICE);
 
-
-
-
         // Return to menu
         view.findViewById(R.id.button_toHome).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,17 +84,24 @@ public class Post extends Fragment {
                     }
                 } else {
                     try {
-                        latitude = Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_N)).getText().toString());
-                        longitude = Double.parseDouble(((EditText)getActivity().findViewById(R.id.input_E)).getText().toString());
+                        latitude = Double.parseDouble(((EditText) getActivity().findViewById(R.id.input_N)).getText().toString());
+                        longitude = Double.parseDouble(((EditText) getActivity().findViewById(R.id.input_E)).getText().toString());
                     } catch (Exception ignored) {
                     }
                 }
-                String message = "";
                 String title = "Le post a bien été envoyé";
-                try {
-                    message = ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
-                } catch(Exception ignored) {
-                }
+                String noData = "Aucune donnée";
+                String message;
+                String temperature;
+                String courant;
+                String vent;
+                String precipitations;
+
+                message = ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString().equals("") ? noData : ((EditText) getActivity().findViewById(R.id.detail_input)).getText().toString();
+                temperature = ((TextView) getActivity().findViewById(R.id.input_temperature)).getText().toString().equals("") ? noData : ((TextView) getActivity().findViewById(R.id.input_temperature)).getText().toString();
+                courant = ((Spinner) getActivity().findViewById(R.id.post_spinner2)).getSelectedItem().toString().equals("") ? noData : ((Spinner) getActivity().findViewById(R.id.post_spinner2)).getSelectedItem().toString();
+                vent = ((TextView) getActivity().findViewById(R.id.input_vent)).getText().toString().equals("") ? noData : ((TextView) getActivity().findViewById(R.id.input_vent)).getText().toString();
+                precipitations = ((TextView) getActivity().findViewById(R.id.input_precipitations)).getText().toString().equals("") ? noData : ((TextView) getActivity().findViewById(R.id.input_precipitations)).getText().toString();
 
                 Calendar calendar = Calendar.getInstance();
                 String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
@@ -106,19 +111,14 @@ public class Post extends Fragment {
                 contentValues.put("Latitude", latitude);
                 contentValues.put("Longitude", longitude);
                 contentValues.put("Details", message);
-                contentValues.put("Date",currentDate);
-                String tmp = null;
-                tmp = ((TextView) getActivity().findViewById(R.id.input_temperature)).getText().toString();
-                contentValues.put("Temperature",tmp);
-                tmp = ((Spinner) getActivity().findViewById(R.id.post_spinner2)).getSelectedItem().toString();
-                contentValues.put("Courant",tmp);
-                tmp = ((TextView) getActivity().findViewById(R.id.input_vent)).getText().toString();
-                contentValues.put("Vent",tmp);
+                contentValues.put("Date", currentDate);
+                contentValues.put("Temperature", temperature);
+                contentValues.put("Courant", courant);
+                contentValues.put("Vent", vent);
 
-                tmp = ((TextView) getActivity().findViewById(R.id.input_precipitations)).getText().toString();
-                contentValues.put("Precipitations",tmp);
-                //contentValues.put("DirectionVent",tmp);
-                //contentValues.put("DirectionCourant",tmp);
+                contentValues.put("Precipitations", precipitations);
+                //contentValues.put("DirectionVent", tmp);
+                //contentValues.put("DirectionCourant", tmp);
                 sqLiteDatabase.insert("Incidents", null, contentValues);
                 sqLiteDatabase.close();
 

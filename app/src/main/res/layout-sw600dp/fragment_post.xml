@@ -29,7 +29,7 @@
                 android:id="@+id/post_N"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:fontFamily="casual"
                 android:text="@string/N"
                 android:textColor="@color/design_default_color_on_secondary"
@@ -41,7 +41,7 @@
                 android:id="@+id/input_N"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/border"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -52,7 +52,7 @@
                 android:id="@+id/post_E"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:fontFamily="casual"
                 android:text="@string/E"
                 android:textColor="@color/design_default_color_on_secondary"
@@ -245,7 +245,7 @@
                 android:background="@drawable/border"
                 android:ems="10"
                 android:importantForAutofill="no"
-                android:inputType="numberDecimal"
+                android:inputType="numberDecimal|numberSigned"
                 android:labelFor="@+id/input_temperature" />
 
             <TextView
