@@ -67,7 +67,7 @@ public class Post extends Fragment {
                 double latitude = 0;
                 double longitude = 0;
                 if (checkBox.isChecked()) {
-                    try{
+                    try {
                         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
@@ -182,15 +182,14 @@ public class Post extends Fragment {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(priority);
-        try{
-            Bitmap largeicon = BitmapFactory.decodeResource(getResources(),R.drawable.app_launcher_round);
+        try {
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),R.drawable.app_launcher_round);
             notification.setStyle(new NotificationCompat.BigPictureStyle()
-                    .bigPicture(largeicon));
+                    .bigPicture(largeIcon));
         }
-        catch(Exception e){
+        catch(Exception ignored){
 
         }
-
-        NotificationManagerCompat.from(getActivity()).notify(++notificationId,notification.build());
+        NotificationManagerCompat.from(getActivity()).notify(++notificationId, notification.build());
     }
 }

@@ -1,10 +1,11 @@
 package com.ihm.seawatch.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +16,12 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
 import com.ihm.seawatch.R;
 
@@ -29,14 +30,9 @@ import static com.ihm.seawatch.fragments.Map.LOCATION_REQUEST;
 
 public class HomePage extends Fragment {
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
-        Switch swi = rootView.findViewById(R.id.gpsSwitch);
-        LocationManager mLocationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        boolean isChecked = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        swi.setChecked(isChecked);
 
         ShareLinkContent content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("https://www.facebook.com/SeaWatch-101141728277356"))
@@ -54,13 +50,16 @@ public class HomePage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         // Create Database in local to add points
         SQLiteDatabase sqLiteDatabase = requireContext().openOrCreateDatabase("geopoints.db", Context.MODE_PRIVATE, null);
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Incidents(Latitude REAL, Longitude REAL, Details TEXT);");
         sqLiteDatabase.close();
 
         final Switch swi = view.findViewById(R.id.gpsSwitch);
+        boolean isChecked = ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+
+        swi.setChecked(isChecked);
         // GPS Switch
         swi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -111,9 +110,9 @@ public class HomePage extends Fragment {
     }
 
     // Change switch value
-    public void alert(final Boolean isChecked){
+    private void alert(final Boolean isChecked){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.requireActivity());
-        if(isChecked){
+        if (isChecked) {
             dialogBuilder.setMessage("Activer la localisation?")
                     .setCancelable(false)
                     .setNegativeButton("Non", new DialogInterface.OnClickListener(){
@@ -125,6 +124,7 @@ public class HomePage extends Fragment {
                     })
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener(){
                         @Override public void onClick(DialogInterface dialog, int which){
+                            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
                             swi.setChecked(true);
                         }
@@ -135,7 +135,9 @@ public class HomePage extends Fragment {
         }
         else {
             Switch swi = getView().findViewById(R.id.gpsSwitch);
-            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+            Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.parse("package:" + this.requireActivity().getPackageName()));
+            startActivity(intent);
             swi.setChecked(false);
         }
     }

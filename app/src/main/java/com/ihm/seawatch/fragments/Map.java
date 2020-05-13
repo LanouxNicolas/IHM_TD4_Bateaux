@@ -52,7 +52,8 @@ public class Map extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
@@ -100,7 +101,6 @@ public class Map extends Fragment {
         mapController.setZoom(14.0);
         mapController.setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
 
-        items.add(new OverlayItem("Incident", "Ceci est un message de test pour un incident", new GeoPoint(location.getLatitude() + 0.02, location.getLongitude() + 0.01)));
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(this.requireContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
@@ -168,8 +168,10 @@ public class Map extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(this.requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+            NavHostFragment.findNavController(Map.this)
+                    .navigate(R.id.reload);
         }
     }
 }
