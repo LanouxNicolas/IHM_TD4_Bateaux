@@ -1,6 +1,8 @@
 package com.ihm.seawatch.activities;
 
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.ihm.seawatch.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String COMMON_TAG = "OrientationChange";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +45,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
     }
+
 
 }

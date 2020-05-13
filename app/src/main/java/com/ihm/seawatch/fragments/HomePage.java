@@ -96,36 +96,35 @@ public class HomePage extends Fragment {
     }
 
     // Change switch value
-    private void alert(final Boolean isChecked) {
+    public void alert(final Boolean isChecked){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.requireActivity());
-        if (isChecked) {
-            dialogBuilder.setMessage("Activer la localisation ?")
+        if(isChecked){
+            dialogBuilder.setMessage("Activer la localisation?")
                     .setCancelable(false)
-                    .setNegativeButton("Oui", new DialogInterface.OnClickListener() {
-                        @Override public void onClick(DialogInterface dialog, int which) {
+                    .setNegativeButton("Non", new DialogInterface.OnClickListener(){
+                        @Override public void onClick(DialogInterface dialog, int which){
                             dialog.cancel();
-                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
-                            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
-                            swi.setChecked(true);
+                            swi.setChecked(false);
                         }
                     })
-                    .setPositiveButton("Non", new DialogInterface.OnClickListener() {
-                        @Override public void onClick(DialogInterface dialog, int which) {
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener(){
+                        @Override public void onClick(DialogInterface dialog, int which){
                             Switch swi = getView().findViewById(R.id.gpsSwitch);
-                            startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
-                            swi.setChecked(false);
+                            swi.setChecked(true);
                         }
                     });
             AlertDialog alert = dialogBuilder.create();
             alert.setTitle("Localisation");
             alert.show();
-        } else {
+        }
+        else {
             Switch swi = getView().findViewById(R.id.gpsSwitch);
             startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
             swi.setChecked(false);
         }
     }
+
 
     private void composeEmail(String[] addresses, String subject) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);

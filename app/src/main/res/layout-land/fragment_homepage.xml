@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ihm.seawatch.fragments.HomePage">
+
+    <Switch
+        android:id="@+id/gpsSwitch"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/border"
+        android:checked="false"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:checked="false" />
+
+    <TextView
+        android:id="@+id/gps_textView"
+        android:layout_width="150dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="508dp"
+        android:fontFamily="casual"
+        android:gravity="center_vertical"
+        android:text="@string/location"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_map"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="140dp"
+        android:background="@android:drawable/ic_dialog_map"
+        android:backgroundTint="@color/design_default_color_on_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/map_textView"
+        android:layout_width="116dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="236dp"
+        android:layout_marginEnd="340dp"
+        android:fontFamily="casual"
+        android:paddingTop="20sp"
+        android:text="@string/mapToggle"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_post"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="504dp"
+        android:layout_marginTop="140dp"
+        android:background="@android:drawable/ic_input_get"
+        android:backgroundTint="@color/design_default_color_on_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_textView"
+        android:layout_width="240dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="220dp"
+        android:fontFamily="casual"
+        android:paddingTop="25sp"
+        android:text="@string/post"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/button_post"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_dev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:fontFamily="casual"
+        android:paddingTop="25sp"
+        android:text="@string/contact_dev"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
